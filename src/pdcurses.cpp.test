@@ -1,0 +1,11 @@
+#include <pdcurses.h>
+
+int main(void)
+{
+    initscr();
+    printw("Hello");
+    getch();
+    endwin();
+
+    return 0;
+}

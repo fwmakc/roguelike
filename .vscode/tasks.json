@@ -1,0 +1,19 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "detail": "C/C++ Make: Скомпилировать приложение",
+            "label": "build",
+            "command": "make.exe",
+            "args": [
+                "-C",
+                "${workspaceFolder}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "group": "build"
+        },
+    ],
+    "version": "2.0.0"
+}

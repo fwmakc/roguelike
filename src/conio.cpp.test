@@ -1,0 +1,16 @@
+#include <conio.h>
+#include <stdio.h>
+
+int main(void)
+{
+    printf("Press any key. Space to exit.");
+
+    char input;
+    while (input != ' ')
+    {
+        input = getch();
+        printf("You press: %c\n", input);
+    }
+
+    return 0;
+}
