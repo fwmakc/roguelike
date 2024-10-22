@@ -1,8 +1,14 @@
 #ifndef _GOBLIN_H_
 #define _GOBLIN_H_
 
-const char* goblinDeclension(int goblinHp);
-int goblin(int playerGold);
+#include <enemy.h>
+
+class Goblin : public Enemy
+{
+  public:
+    Goblin();
+    void message(const char* state) override;
+}
 
 #endif
 ;

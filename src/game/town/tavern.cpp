@@ -3,7 +3,6 @@
 #include <goblin.h>
 #include <interface.h>
 
-
 int tavern(int playerGold, char* nickname)
 {
     const char* action;
@@ -37,7 +36,8 @@ int tavern(int playerGold, char* nickname)
 
         if (Interface::equal(action, "KEY_3"))
         {
-            playerGold = goblin(playerGold);
+            Goblin gobs;
+            playerGold = gobs.start(playerGold);
         }
 
         if (Interface::equal(action, "KEY_0"))

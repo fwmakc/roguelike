@@ -1,85 +1,54 @@
 #include <declension.h>
+#include <goblin.h>
 #include <interface.h>
 #include <random.h>
 
-const char* goblinDeclension(int goblinHp)
+Goblin::Goblin()
 {
-    return declension(goblinHp, "жизнь", "жизни", "жизней");
+    hitpoints = random(2, 4);
+    gold = random(3, 10);
+    level = 5;
 }
 
-int goblin(int playerGold)
+void Goblin::message(const char* state)
 {
-    int goblinHp = random(2, 4);
-    int goblinGold = random(5, 15);
-    const char* goblinString;
+    const char* goblinString =
+        declension(hitpoints, "жизнь", "жизни", "жизней");
 
-    goblinString = goblinDeclension(goblinHp);
-
-    const char* action;
-    int loop = 1;
-
-    Interface::reset();
-
-    Interface::print("Тебя атаковал гоблин! У него %d %s", goblinHp,
-                     goblinString);
-
-    while (loop == 1)
+    if (Interface::equal(state, "start"))
     {
-        Interface::print("1. Автобой");
-        Interface::print("2. Атаковать");
-        Interface::print("0. Убежать");
-
-        action = Interface::get();
-
-        if (Interface::equal(action, "KEY_0"))
-        {
-            Interface::print("Ты решил сбежать с поля боя. Ну что ж, пока!");
-            break;
-        }
-
-        if (Interface::equal(action, "KEY_1"))
-        {
-            while (goblinHp > 0)
-            {
-                goblinHp--;
-                goblinString = goblinDeclension(goblinHp);
-                Interface::print("Ты ударил гоблина. У него осталось %d %s",
-                                 goblinHp, goblinString);
-            }
-        }
-
-        if (Interface::equal(action, "KEY_2"))
-        {
-            goblinHp--;
-            goblinString = goblinDeclension(goblinHp);
-            Interface::print("Ты ударил гоблина. У него осталось %d %s",
-                             goblinHp, goblinString);
-        }
-
-        if (goblinHp < 1)
-        {
-            playerGold += goblinGold;
-            Interface::print("Ура! Ты победил гоблина!");
-
-            const char* goblinGoldString =
-                declension(goblinGold, "золотую монету", "золотые монеты",
-                           "золотых монет");
-            const char* playerGoldString =
-                declension(playerGold, "золотой", "золотых", "золота");
-
-            Interface::print("За победу ты получаешь %d %s", goblinGold,
-                             goblinGoldString);
-            Interface::print("Теперь у тебя %d %s", playerGold,
-                             playerGoldString);
-
-            break;
-        }
-        // else
-        // {
-        //     printw("Goblin run away.");
-        //     break;
-        // }
+        Interface::print("Тебя атаковал гоблин! У него %d %s", hitpoints,
+                         goblinString);
     }
 
-    return playerGold;
+    if (Interface::equal(state, "escape"))
+    {
+        Interface::print("Ты решил сбежать с поля боя. Ну что ж, пока!");
+    }
+
+    if (Interface::equal(state, "attack"))
+    {
+        Interface::print("Ты ударил гоблина. У него осталось %d %s", hitpoints,
+                         goblinString);
+    }
+
+    if (Interface::equal(state, "miss"))
+    {
+        Interface::print("Ты промахнулся!");
+    }
+
+    if (Interface::equal(state, "win"))
+    {
+        Interface::print("Ура! Ты победил гоблина!");
+    }
+
+    if (Interface::equal(state, "fail"))
+    {
+        Interface::print("Тебе не повезло, гоблин победил тебя!");
+    }
+
+    if (Interface::equal(state, "lose"))
+    {
+        Interface::print("Ух-ты, гоблин убежал. Ты не получаешь монет");
+    }
 }

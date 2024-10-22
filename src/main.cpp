@@ -1,5 +1,6 @@
 #include <exit.h>
 #include <interface.h>
+#include <random.h>
 #include <start.h>
 #include <tavern.h>
 
